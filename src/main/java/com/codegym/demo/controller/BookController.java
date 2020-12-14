@@ -40,7 +40,7 @@ public class BookController {
         return authorService.findAll(pageable);
     }
 
-    @GetMapping("/list")
+    @GetMapping("/")
     public ModelAndView listBooks(@RequestParam("s") Optional<String> s, @PageableDefault(size = 10) Pageable pageable) {
         Page<Book> books;
         if (s.isPresent()) {

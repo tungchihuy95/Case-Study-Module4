@@ -146,3 +146,7 @@ a.list-group-item, button.list-group-item {
   text-decoration: none;
 }
 
+.card-img-top {
+  height: 170px;
+}
+
