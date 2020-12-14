@@ -1,11 +1,20 @@
 package com.codegym.demo.model;
 
+import com.codegym.demo.model.Category;
+import com.codegym.demo.model.User;
+import lombok.Data;
+import org.springframework.data.annotation.CreatedDate;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 @Table(name = "Requests")
-public class Request implements Cloneable{
+@Data
+public class Request implements Cloneable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long requestId;
@@ -16,24 +25,44 @@ public class Request implements Cloneable{
     private String title;
     private String coverImg;
     private String description;
-
+    private long publishedDate;
+    private int pages;
+    private String categories;
     @NotEmpty
     private String author;
 
     @Column(columnDefinition = "int default 0")
     private int requestStatus;
+    //    0: new, 1: đang xử lý, 2: đã xử lý xong, 3: từ chối thêm bởi Admin
+    private LocalDate createdAt;
+    public Request() {
+    }
 
-    public Request(Long requestId, User userId, @NotEmpty String title, String coverImg, String description, @NotEmpty String author, int requestStatus) {
+    public Request(Long requestId, User userId, @NotEmpty String title, String coverImg, String description, long publishedDate, int pages, String categories, @NotEmpty String author, int requestStatus, LocalDate createdAt) {
         this.requestId = requestId;
         this.userId = userId;
         this.title = title;
         this.coverImg = coverImg;
         this.description = description;
+        this.publishedDate = publishedDate;
+        this.pages = pages;
+        this.categories = categories;
         this.author = author;
         this.requestStatus = requestStatus;
+        this.createdAt = LocalDate.now();
     }
 
-    public Request() {
+    public Request(User userId, @NotEmpty String title, String coverImg, String description, long publishedDate, int pages, String categories, @NotEmpty String author, int requestStatus, LocalDate createdAt) {
+        this.userId = userId;
+        this.title = title;
+        this.coverImg = coverImg;
+        this.description = description;
+        this.publishedDate = publishedDate;
+        this.pages = pages;
+        this.categories = categories;
+        this.author = author;
+        this.requestStatus = requestStatus;
+        this.createdAt = createdAt;
     }
 
     public Long getRequestId() {
@@ -76,6 +105,30 @@ public class Request implements Cloneable{
         this.description = description;
     }
 
+    public long getPublishedDate() {
+        return publishedDate;
+    }
+
+    public void setPublishedDate(long publishedDate) {
+        this.publishedDate = publishedDate;
+    }
+
+    public int getPages() {
+        return pages;
+    }
+
+    public void setPages(int pages) {
+        this.pages = pages;
+    }
+
+    public String getCategories() {
+        return categories;
+    }
+
+    public void setCategories(String categories) {
+        this.categories = categories;
+    }
+
     public String getAuthor() {
         return author;
     }
@@ -92,16 +145,11 @@ public class Request implements Cloneable{
         this.requestStatus = requestStatus;
     }
 
-    @Override
-    public String toString() {
-        return "Request{" +
-                "requestId=" + requestId +
-                ", userId=" + userId +
-                ", title='" + title + '\'' +
-                ", coverImg='" + coverImg + '\'' +
-                ", description='" + description + '\'' +
-                ", author='" + author + '\'' +
-                ", requestStatus=" + requestStatus +
-                '}';
+    public LocalDate getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDate createdAt) {
+        this.createdAt = createdAt;
     }
 }

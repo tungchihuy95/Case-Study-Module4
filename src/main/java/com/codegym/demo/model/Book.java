@@ -1,12 +1,15 @@
 package com.codegym.demo.model;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.Set;
 
+@Data
 @Entity
-@Table(name = "Books")
-public class Book implements Cloneable {
+@Table(name= "Books")
+public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bookId;
@@ -14,19 +17,17 @@ public class Book implements Cloneable {
     @NotEmpty
     private String title;
     private String description;
-    @Column(columnDefinition = "BOOLEAN DEFAULT false")
-    private Boolean isDeleted;
-    private Long publishedDate;
-    private Integer pages;
+    @Column(columnDefinition="BOOLEAN DEFAULT false")
+    private boolean isDeleted;
+    private long publishedDate;
+    private int pages;
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Category> categories;
     @ManyToOne
-    @JoinColumn(name = "authorId")
-    private Author author;
+    private Author authorId;
 
     public Book() {
     }
-
     public Book(String coverImg, @NotEmpty String title, String description, Boolean isDeleted, Long publishedDate, Integer pages) {
         this.coverImg = coverImg;
         this.title = title;
@@ -36,20 +37,46 @@ public class Book implements Cloneable {
         this.pages = pages;
     }
 
+    public Book(Long bookId, @NotEmpty String title, String description, boolean isDeleted, long publishedDate, int pages, Set<Category> categories, Author authorId) {
+        this.bookId = bookId;
+        this.title = title;
+        this.description = description;
+        this.isDeleted = isDeleted;
+        this.publishedDate = publishedDate;
+        this.pages = pages;
+        this.categories = categories;
+        this.authorId = authorId;
+    }
+
+    public Book(Long bookId, String coverImg, @NotEmpty String title, String description, boolean isDeleted, long publishedDate, int pages, Set<Category> categories, Author authorId) {
+        this.bookId = bookId;
+        this.coverImg = coverImg;
+        this.title = title;
+        this.description = description;
+        this.isDeleted = isDeleted;
+        this.publishedDate = publishedDate;
+        this.pages = pages;
+        this.categories = categories;
+        this.authorId = authorId;
+    }
+
+    public Book(String coverImg, @NotEmpty String title, String description, boolean isDeleted, long publishedDate, int pages, Set<Category> categories, Author authorId) {
+        this.coverImg = coverImg;
+        this.title = title;
+        this.description = description;
+        this.isDeleted = isDeleted;
+        this.publishedDate = publishedDate;
+        this.pages = pages;
+        this.categories = categories;
+        this.authorId = authorId;
+    }
+
     public Long getBookId() {
         return bookId;
     }
 
     public void setBookId(Long bookId) {
         this.bookId = bookId;
-    }
-
-    public Set<Category> getCategories() {
-        return categories;
-    }
-
-    public void setCategories(Set<Category> categories) {
-        this.categories = categories;
     }
 
     public String getCoverImg() {
@@ -76,11 +103,11 @@ public class Book implements Cloneable {
         this.description = description;
     }
 
-    public Boolean getDeleted() {
+    public boolean isDeleted() {
         return isDeleted;
     }
 
-    public void setDeleted(Boolean deleted) {
+    public void setDeleted(boolean deleted) {
         isDeleted = deleted;
     }
 
@@ -100,43 +127,19 @@ public class Book implements Cloneable {
         this.pages = pages;
     }
 
-    public Author getAuthor() {
-        return author;
+    public Set<Category> getCategories() {
+        return categories;
     }
 
-    public void setAuthor(Author authorId) {
-        this.author = authorId;
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
     }
-//    public CategoryBook getCategoryBook() {
-//        return bookId;
-//    }
-//    public void setCategoryBook(CategoryBook bookId) {
-//        this.bookId = bookId;
-//    }
-//    @Override
-//    public Book clone(){
-//        Book book = new Book();
-//        book.setCategoryBook(bookId);
-//        book.setCoverImg(coverImg);
-//        book.setTitle(title);
-//        book.setAuthor(authorId);
-//        book.setDescription(description);
-//        book.setDeleted(isDeleted);
-//        book.setPublishedDate(publishedDate);
-//        book.setPages(pages);
-//        return book;
-//    }
-//    @Override
-//    public String toString() {
-//        return "Book{" +
-//                "coverImg='" + coverImg + '\'' +
-//                ", title='" + title + '\'' +
-//                ", description='" + description + '\'' +
-//                ", isDeleted=" + isDeleted +
-//                ", publishedDate=" + publishedDate +
-//                ", pages=" + pages +
-//                ", authorId=" + authorId +
-//                ", bookId=" + bookId +
-//                '}';
-//    }
+
+    public Author getAuthorId() {
+        return authorId;
+    }
+
+    public void setAuthorId(Author authorId) {
+        this.authorId = authorId;
+    }
 }

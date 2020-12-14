@@ -1,25 +1,53 @@
 package com.codegym.demo.model;
 
+import lombok.Data;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.util.Set;
+
+@Data
 public class RequestForm {
     private Long requestId;
-    private User user;
+    private User userId;
     private String title;
     private MultipartFile coverImg;
     private String description;
+    private long publishedDate;
+    private int pages;
+    private String categories;
     private String author;
     private int requestStatus;
-
+    private LocalDate createdAt;
+    //    0: new, 1: đang xử lý, 2: đã xử lý xong
     public RequestForm() {
     }
 
-    public RequestForm(Long requestId, User user, String title, MultipartFile coverImg, String description, String author, int requestStatus) {
+    public RequestForm(Long requestId, User userId, String title, MultipartFile coverImg, String description, long publishedDate, int pages, String categories, String author, int requestStatus, Timestamp createdAt) {
         this.requestId = requestId;
-        this.user = user;
+        this.userId = userId;
         this.title = title;
         this.coverImg = coverImg;
         this.description = description;
+        this.publishedDate = publishedDate;
+        this.pages = pages;
+        this.categories = categories;
+        this.author = author;
+        this.requestStatus = requestStatus;
+        this.createdAt = LocalDate.now();
+    }
+
+    public RequestForm(Long requestId, User userId, String title, MultipartFile coverImg, String description, long publishedDate, int pages, String categories, String author, int requestStatus) {
+        this.requestId = requestId;
+        this.userId = userId;
+        this.title = title;
+        this.coverImg = coverImg;
+        this.description = description;
+        this.publishedDate = publishedDate;
+        this.pages = pages;
+        this.categories = categories;
         this.author = author;
         this.requestStatus = requestStatus;
     }
@@ -32,12 +60,12 @@ public class RequestForm {
         this.requestId = requestId;
     }
 
-    public User getUser() {
-        return user;
+    public User getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(User userId) {
+        this.userId = userId;
     }
 
     public String getTitle() {
@@ -64,6 +92,30 @@ public class RequestForm {
         this.description = description;
     }
 
+    public long getPublishedDate() {
+        return publishedDate;
+    }
+
+    public void setPublishedDate(long publishedDate) {
+        this.publishedDate = publishedDate;
+    }
+
+    public int getPages() {
+        return pages;
+    }
+
+    public void setPages(int pages) {
+        this.pages = pages;
+    }
+
+    public String getCategories() {
+        return categories;
+    }
+
+    public void setCategories(String categories) {
+        this.categories = categories;
+    }
+
     public String getAuthor() {
         return author;
     }
@@ -80,16 +132,11 @@ public class RequestForm {
         this.requestStatus = requestStatus;
     }
 
-    @Override
-    public String toString() {
-        return "Request{" +
-                "requestId=" + requestId +
-                ", user=" + user +
-                ", title='" + title + '\'' +
-                ", coverImg='" + coverImg + '\'' +
-                ", description='" + description + '\'' +
-                ", author='" + author + '\'' +
-                ", requestStatus=" + requestStatus +
-                '}';
+    public LocalDate getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDate createdAt) {
+        this.createdAt = createdAt;
     }
 }
